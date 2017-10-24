@@ -1,2 +1,57 @@
-<h1>Surveys#index</h1>
-<p>Find me in app/views/surveys/index.html.erb</p>
+<style type="text/css">
+	.label {
+		font-size:1.5em;
+	}
+	 form {
+	 	font-size: .8em;
+	 }
+</style>
+
+<h1>Pick My Dog</h1>
+
+
+<fieldset>
+	<legend><h2>Breed Selector Quiz</h2></legend>
+	<form action= "/result" method="get">
+		<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
+		<label class ="label">Housing Type:</label>
+		<select name= "housing">
+		  <option value="Small">Apartment</option>
+		  <option value="Medium">House</option>
+		  <option value="Large">Home/Ranch with sizable backyard</option>
+		  <
+		</select>
+		<br>
+		<br>
+		<label class ="label">Activity Level:</label>
+		Couch-potato <input type="radio" name="activity_level" value= "Low">
+		I take walks everyday <input type="radio" name="activity_level" value= "Medium">
+		I am all about that running life! <input type="radio" name="activity_level" value= "High">
+
+		<br>
+		<br>
+		<label class ="label">Groom me Gorgeous:</label>
+		Alll About it! I will groom my little pooch every week! <input type="radio" name="grooming" value= "Weekly">
+		I don't mind a little extra care <input type="radio" name="grooming" value= "Bi-Weekly">
+		Yea... what's grooming?! <input type="radio" name="grooming" value= "Once">
+
+		<br>
+		<br>
+		<label class ="label">Other Pets (in the home):</label>
+		Sure do <input type="radio" name="other_pets" value= "Yes">
+		Nope!<input type="radio" name="other_pets" value= "No">
+
+		<br>
+		<br>
+		<label class ="label">Willing to spend on food (per week):</label>
+		About $10 <input type="radio" name="food" value= "$10">
+		$25 give or take a few <input type="radio" name="food" value= "$25">
+		$35+ I'm a baller for my pup! <input type="radio" name="food" value= "$35+">
+
+		<br>
+		<br>
+		<input type="submit" value="Submit">
+		
+		
+	</form>
+</fieldset>

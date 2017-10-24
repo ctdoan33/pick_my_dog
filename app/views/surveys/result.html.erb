@@ -1,2 +1,22 @@
-<h1>Surveys#result</h1>
-<p>Find me in app/views/surveys/result.html.erb</p>
+
+<!-- insert Dog API image -->
+<% if @dog %>
+<h1><%= @dog.breed %></h1>
+<% end %>
+
+<div class= boxes>
+	<!-- put pic here -->
+</div>
+
+
+<div class= boxes>
+
+	<%= @match %>
+	<% if @dog %>
+
+	<br>
+	<%= @dog.breed %>
+	<% end %>
+	
+</div>
+
