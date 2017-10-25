@@ -104,11 +104,14 @@ class SurveysController < ApplicationController
   		end
 
 
+  		
 
   		response = RestClient::Request.execute(
-	  		method: get,
+	  		method: 'get',
 	  		url: "https://dog.ceo/api/breed/#{name}/images/random"
 	  			)
+
+  		@hash = ActiveSupport::JSON.decode(response) 
   			
   	end
 

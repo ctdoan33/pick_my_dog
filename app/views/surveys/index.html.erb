@@ -1,57 +1,151 @@
-<style type="text/css">
-	.label {
-		font-size:1.5em;
-	}
-	 form {
-	 	font-size: .8em;
-	 }
-</style>
 
-<h1>Pick My Dog</h1>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<fieldset>
-	<legend><h2>Breed Selector Quiz</h2></legend>
-	<form action= "/result" method="get">
-		<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
-		<label class ="label">Housing Type:</label>
-		<select name= "housing">
-		  <option value="Small">Apartment</option>
-		  <option value="Medium">House</option>
-		  <option value="Large">Home/Ranch with sizable backyard</option>
-		  <
-		</select>
-		<br>
-		<br>
-		<label class ="label">Activity Level:</label>
-		Couch-potato <input type="radio" name="activity_level" value= "Low">
-		I take walks everyday <input type="radio" name="activity_level" value= "Medium">
-		I am all about that running life! <input type="radio" name="activity_level" value= "High">
+		<script>
+			$(document).ready(function(){
+				$('#survey').hide();
+	    		$('#link').click(function(){
+	    			$('#survey').toggle();   
+	    		});
+			});
+		</script>
 
-		<br>
-		<br>
-		<label class ="label">Groom me Gorgeous:</label>
-		Alll About it! I will groom my little pooch every week! <input type="radio" name="grooming" value= "Weekly">
-		I don't mind a little extra care <input type="radio" name="grooming" value= "Bi-Weekly">
-		Yea... what's grooming?! <input type="radio" name="grooming" value= "Once">
+		<style type="text/css">
+			.label {
+				font-size:1.5em;
+				border-bottom: 1px solid black;
+				margin-bottom: 20px;
+			}
+	 		form {
+	 			font-size: .8em;
+	 			border-radius: 3px;
+    			background-color: rgba(8, 27, 35, 0.3);
+    			border-radius: 3px;
+    			padding: 25px;
 
-		<br>
-		<br>
-		<label class ="label">Other Pets (in the home):</label>
-		Sure do <input type="radio" name="other_pets" value= "Yes">
-		Nope!<input type="radio" name="other_pets" value= "No">
+			}
+			h1 {
+				font-family: monospace;
+				font-weight: bold;
+				font-size: 4em;
+				display: inline;
+			}
+			.spread_pic {
+				width: 100%;
+				
+			}
+			.paw {
+				width: 15%;
+				background-color: transparent;
+			}
+			body {
+				font-family: monospace;
+			}
+			.main {
+				width: 100%;
+				/*border: 2px solid black;*/
+				padding: 25px;
+				height: 25%;
+			}
+			#footer {
+				background-color: #CC6600;
+				height: 40%;
+				text-align: center;
+				font-size: 1.7em;
+				padding: 25px;
+			}
+			.bottom_prints {
+				height: 55px;
+			}
+		</style>
 
-		<br>
-		<br>
-		<label class ="label">Willing to spend on food (per week):</label>
-		About $10 <input type="radio" name="food" value= "$10">
-		$25 give or take a few <input type="radio" name="food" value= "$25">
-		$35+ I'm a baller for my pup! <input type="radio" name="food" value= "$35+">
+		<title>Finding Fido</title>
 
-		<br>
-		<br>
-		<input type="submit" value="Submit">
 		
+
+	</head>
+
+	<body>
+
+	<div>
+	<h1><%= image_tag "dope_paw.jpg", class: "paw" %> Finding Fido</h1>
+		<%= image_tag "pup3.jpg", class: "spread_pic" %>
+	</div>
 		
-	</form>
-</fieldset>
+
+
+			<div class= "main">
+				<h2 id= "link"> <%= image_tag "paw_talk.png", class: "paw" %> <span style= "font-size: 2em; text-shadow: 5px 5px grey; ">CLICK</span> for <b>Breed Selector Quiz</b></h2>
+				<form id = "survey" action= "/result" method="get">
+					<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
+					<label class ="label">Housing Type</label>
+					<br>
+					<select name= "housing">
+					  <option value="Small">Apartment</option>
+					  <option value="Medium">House</option>
+					  <option value="Large">Home/Ranch with sizable backyard</option>
+					  <
+					</select>
+					<br>
+					<br>
+					<label class ="label">Activity Level</label>
+					<br>
+					<input  type="radio" name="activity_level" value= "Low">Couch-potato
+
+					<input type="radio" name="activity_level" value= "Medium">I take walks everyday 
+
+					<input type="radio" name="activity_level" value= "High">I am all about that running life! 
+
+					<br>
+					<br>
+					<label class ="label">Groom me Gorgeous</label>
+					<br>
+
+					<input type="radio" name="grooming" value= "Weekly">Alll about it! Gonna groom my pooch every week! 
+
+					<input type="radio" name="grooming" value= "Bi-Weekly">I don't mind a little extra care.
+
+					<input type="radio" name="grooming" value= "Once">Yea... what's grooming?! 
+
+					<br>
+					<br>
+					<label class ="label">Other Pets (in the home)</label>
+					<br>
+					<input type="radio" name="other_pets" value= "Yes">Sure do 
+
+					<input type="radio" name="other_pets" value= "No">Nope!
+
+					<br>
+					<br>
+					<label class ="label">Willing to spend on food (per week)</label>
+					<br>
+					<input type="radio" name="food" value= "$10">About $10 
+					<input type="radio" name="food" value= "$25">$25 give or take a few 
+					<input type="radio" name="food" value= "$35+">$35+ I'm a baller for my pup!
+
+					<br>
+					<br>
+					<input class="btn btn-primary btn-lg" type="submit" value="Go Fetch!">
+					
+					
+				</form>
+			</div>	
+		<div id= "footer">
+			<p> We believe that <span style= "font-family: cursive; font-weight: bold; ">LOVE</span> is a four legged word 
+
+			<%= image_tag "prints2.png", class: "bottom_prints" %>
+
+			</p>
+							
+		</div>	
+
+	</body>
+</html>
