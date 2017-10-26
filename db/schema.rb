@@ -32,19 +32,6 @@ ActiveRecord::Schema.define(version: 20171026185323) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "dogs", force: :cascade do |t|
-    t.string   "breed"
-    t.string   "size"
-    t.string   "weight"
-    t.string   "energy_needs"
-    t.string   "grooming_per_month"
-    t.string   "pet_compatibility"
-    t.string   "feed_cost_weekly"
-    t.text     "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
   create_table "surveys", force: :cascade do |t|
     t.string   "breed"
     t.string   "size"
