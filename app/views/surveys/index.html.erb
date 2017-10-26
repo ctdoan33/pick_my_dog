@@ -12,18 +12,34 @@
 		<script>
 			$(document).ready(function(){
 				$('#survey').hide();
-	    		$('#link').click(function(){
+	    		$('.link').click(function(){
 	    			$('#survey').toggle();   
 	    		});
+
+	    		<% if flash[:errors] %>
+	    			$('#survey').show();
+	    		<% end %> 
 			});
 		</script>
 
 		<style type="text/css">
+
+			@font-face {
+				font-family: "cabana_reg";
+				src: url( <%= asset_path 'Cabana-Regular.otf' %>);
+			/*	src: 
+				url("assets/fonts/Harabara.woff") format("woff"),
+				url("css/fonts/cabana.otf") format("opentype"),
+				url("css/fonts/Harabara.svg#filename") format("svg");*/
+			}
+
 			.label {
 				font-size:1.5em;
 				border-bottom: 1px solid black;
 				margin-bottom: 20px;
+				font-weight: bold;
 			}
+
 	 		form {
 	 			font-size: .8em;
 	 			border-radius: 3px;
@@ -33,9 +49,8 @@
 
 			}
 			h1 {
-				font-family: monospace;
 				font-weight: bold;
-				font-size: 4em;
+				font-size: 8em;
 				display: inline;
 			}
 			.spread_pic {
@@ -43,24 +58,54 @@
 				
 			}
 			.paw {
-				width: 15%;
+				width: 20%;
 				background-color: transparent;
 			}
+			.paw_talk {
+				width: 80%;
+							}
+
 			body {
-				font-family: monospace;
+				font-family: "cabana_reg";
+				font-size: 1.5em;
 			}
+
+			#survey {
+				font-size: 2em;
+			}
+
 			.main {
 				width: 100%;
-				/*border: 2px solid black;*/
 				padding: 25px;
 				height: 25%;
+				
 			}
+			.main_move {
+				display: inline-block;
+				vertical-align: bottom;
+				
+
+			}
+			.main_move h2 {
+				font-size: 4em;
+			}
+
+			.button {
+				font-size: larger;
+			}
+
 			#footer {
 				background-color: #CC6600;
 				height: 40%;
 				text-align: center;
-				font-size: 1.7em;
 				padding: 25px;
+				padding-top: 50px;
+			}
+
+			#footer p {
+				font-size: 2em;
+				font-family: "cabana_reg";
+				color: black;
 			}
 			.bottom_prints {
 				height: 55px;
@@ -75,77 +120,160 @@
 
 	<body>
 
-	<div>
-	<h1><%= image_tag "dope_paw.jpg", class: "paw" %> Finding Fido</h1>
-		<%= image_tag "pup3.jpg", class: "spread_pic" %>
-	</div>
-		
+		<div>
+		<h1><%= image_tag "dope_paw.jpg", class: "paw" %> Finding Fido</h1>
+			<%= image_tag "pup3.jpg", class: "spread_pic" %>
+		</div>
+			
 
 
-			<div class= "main">
-				<h2 id= "link"> <%= image_tag "paw_talk.png", class: "paw" %> <span style= "font-size: 2em; text-shadow: 5px 5px grey; ">CLICK</span> for <b>Breed Selector Quiz</b></h2>
-				<form id = "survey" action= "/result" method="get">
-					<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
-					<label class ="label">Housing Type</label>
-					<br>
-					<select name= "housing">
-					  <option value="Small">Apartment</option>
-					  <option value="Medium">House</option>
-					  <option value="Large">Home/Ranch with sizable backyard</option>
-					  <
-					</select>
-					<br>
-					<br>
-					<label class ="label">Activity Level</label>
-					<br>
-					<input  type="radio" name="activity_level" value= "Low">Couch-potato
+				<div class= "main">
+					<p class= "main_move link"><%= image_tag "paw_talk.png", class: "paw_talk" %></p>
+					<h2 class= "main_move link"> <span style= "font-size: 4em; text-shadow: 3px 3px grey; ">CLICK </span><span style= "font-size: 2.5em;">_for_ <b>Breed Selector Quiz</b></span></h2>
 
-					<input type="radio" name="activity_level" value= "Medium">I take walks everyday 
 
-					<input type="radio" name="activity_level" value= "High">I am all about that running life! 
+					<form id = "survey" action= "/result" method="get">
+						<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
 
-					<br>
-					<br>
-					<label class ="label">Groom me Gorgeous</label>
-					<br>
+						<!-- if there are errors in survey submission, append these flash warnings: -->
 
-					<input type="radio" name="grooming" value= "Weekly">Alll about it! Gonna groom my pooch every week! 
+						<% if flash[:errors] && !flash[:errors].empty? %>
+							<div style= "color: #990000; font-weight: bold; width: 50%; padding: 10px; border: 10px solid black">
+							 	<% flash[:errors].each do |x| %>
+							 			<p><%= x %></p>
+								<% end %>	
+							</div>
+						<% end %>
 
-					<input type="radio" name="grooming" value= "Bi-Weekly">I don't mind a little extra care.
 
-					<input type="radio" name="grooming" value= "Once">Yea... what's grooming?! 
 
-					<br>
-					<br>
-					<label class ="label">Other Pets (in the home)</label>
-					<br>
-					<input type="radio" name="other_pets" value= "Yes">Sure do 
+						<label class="label">Location</label>
+						<br>
+							<input type="text" name="zip"> Zip Code  --<span style= "font-weight: bold; color:#990000;">OR</span>--
+							<input type="text" name="city">  City
+							<select name="state">
+								<option value="AL">AL</option>
+								<option value="AK">AK</option>
+								<option value="AR">AR</option>	
+								<option value="AZ">AZ</option>
+								<option value="CA">CA</option>
+								<option value="CO">CO</option>
+								<option value="CT">CT</option>
+								<option value="DC">DC</option>
+								<option value="DE">DE</option>
+								<option value="FL">FL</option>
+								<option value="GA">GA</option>
+								<option value="HI">HI</option>
+								<option value="IA">IA</option>	
+								<option value="ID">ID</option>
+								<option value="IL">IL</option>
+								<option value="IN">IN</option>
+								<option value="KS">KS</option>
+								<option value="KY">KY</option>
+								<option value="LA">LA</option>
+								<option value="MA">MA</option>
+								<option value="MD">MD</option>
+								<option value="ME">ME</option>
+								<option value="MI">MI</option>
+								<option value="MN">MN</option>
+								<option value="MO">MO</option>	
+								<option value="MS">MS</option>
+								<option value="MT">MT</option>
+								<option value="NC">NC</option>	
+								<option value="NE">NE</option>
+								<option value="NH">NH</option>
+								<option value="NJ">NJ</option>
+								<option value="NM">NM</option>			
+								<option value="NV">NV</option>
+								<option value="NY">NY</option>
+								<option value="ND">ND</option>
+								<option value="OH">OH</option>
+								<option value="OK">OK</option>
+								<option value="OR">OR</option>
+								<option value="PA">PA</option>
+								<option value="RI">RI</option>
+								<option value="SC">SC</option>
+								<option value="SD">SD</option>
+								<option value="TN">TN</option>
+								<option value="TX">TX</option>
+								<option value="UT">UT</option>
+								<option value="VT">VT</option>
+								<option value="VA">VA</option>
+								<option value="WA">WA</option>
+								<option value="WI">WI</option>	
+								<option value="WV">WV</option>
+								<option value="WY">WY</option>
+							</select>  State
+							<br>
+							<br>
 
-					<input type="radio" name="other_pets" value= "No">Nope!
+						<label class ="label">Housing Type</label>
+						<br>
+							<select name= "housing">
+							  <option value="Small">Apartment</option>
+							  <option value="Medium">House</option>
+							  <option value="Large">Home/Ranch with sizable backyard</option>
+							  <
+							</select>
+							<br>
+							<br>
 
-					<br>
-					<br>
-					<label class ="label">Willing to spend on food (per week)</label>
-					<br>
-					<input type="radio" name="food" value= "$10">About $10 
-					<input type="radio" name="food" value= "$25">$25 give or take a few 
-					<input type="radio" name="food" value= "$35+">$35+ I'm a baller for my pup!
 
-					<br>
-					<br>
-					<input class="btn btn-primary btn-lg" type="submit" value="Go Fetch!">
-					
-					
-				</form>
+						<label class ="label">Activity Level</label>
+						<br>
+							<input  type="radio" name="activity_level" value= "Low">Couch-potato
+
+							<input type="radio" name="activity_level" value= "Medium">I take walks everyday 
+
+							<input type="radio" name="activity_level" value= "High">I am all about that running life! 
+
+							<br>
+							<br>
+
+
+						<label class ="label">Groom me Gorgeous</label>
+						<br>
+
+							<input type="radio" name="grooming" value= "Once">Yea... what's grooming?! 
+
+							<input type="radio" name="grooming" value= "Bi-Weekly">I don't mind a little brushing here and there. 
+
+							<input type="radio" name="grooming" value= "Weekly"> Fashionista-status. Gonna groom my pooch every week! 
+							<br>
+							<br>
+
+
+						<label class ="label">Other Pets (in the home)</label>
+						<br>
+
+							<input type="radio" name="other_pets" value= "No">Nope!
+
+							<input type="radio" name="other_pets" value= "Yes">Sure do
+
+							<br>
+							<br>
+
+						<label class ="label">Willing to spend on food (per week)</label>
+						<br>
+							<input type="radio" name="food" value= "$10">About $10 
+							<input type="radio" name="food" value= "$25">$25 give or take a few 
+							<input type="radio" name="food" value= "$35+">$35+ I'm a baller for my pup!
+							<br>
+							<br>
+
+						<input class="button btn btn-primary btn-lg" type="submit" value="Go Fetch!">
+						
+						
+					</form>
+				</div>	
+			<div id= "footer">
+				<p class= "foot_move"> We believe that <span style= "font-family: cursive; font-weight: bold ; color: #990000;">LOVE</span> is a four legged word 
+				<%= image_tag "prints2.png", class: "bottom_prints" %>
+
+				</p>
+				
+								
 			</div>	
-		<div id= "footer">
-			<p> We believe that <span style= "font-family: cursive; font-weight: bold; ">LOVE</span> is a four legged word 
-
-			<%= image_tag "prints2.png", class: "bottom_prints" %>
-
-			</p>
-							
-		</div>	
 
 	</body>
 </html>

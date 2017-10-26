@@ -1,11 +1,50 @@
 class SurveysController < ApplicationController
+  
+
   def index
   	#renders Survey (main) page
+
+# PETFINDER API :
+#   	API Key
+# f34ee08273312bdea551fefa54ad6426
+# API Secret
+# 37975bcc692575b169c4c2ea3d442d74
+
   end
 
   def result
 
   	#render the Dog Info page!
+  	flash[:errors] = []
+
+  	if params[:zip].length == 5
+  		location = params[:zip]
+
+  	elsif (params[:city].length > 1) && params[:state]
+  		location = params[:city] + params[:state]
+
+  	else 
+
+  		flash[:errors].push("You must fill out either **zip code** OR **city and state**") 
+  	end
+
+
+  	if params[:housing] && params[:activity_level] && params[:grooming] && params[:other_pets] && params[:food]
+  		
+
+  	else
+
+  		flash[:errors].push("You must fill out each entry") 
+  	end
+
+
+  	#binding.pry
+
+  	unless flash[:errors].empty?
+  		redirect_to '/'
+  	end
+
+
 
   	if params[:other_pets] == 'Yes'
 
