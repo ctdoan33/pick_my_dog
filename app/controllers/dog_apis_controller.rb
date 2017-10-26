@@ -1,0 +1,2 @@
+class DogApisController < ApplicationController
+end
