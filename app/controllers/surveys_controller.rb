@@ -46,54 +46,7 @@ class SurveysController < ApplicationController
 
 
 
-  	if params[:other_pets] == 'Yes'
-
-  		@dog = Dog.find_by(size: params[:housing], energy_needs: params[:activity_level], grooming_per_month: params[:grooming], pet_compatibility: params[:other_pets], feed_cost_weekly: params[:food])
-
-  		match_strength = 5;
-
-
-
-  		unless @dog
-	  		@dog = Dog.find_by(size: params[:housing], grooming_per_month: params[:grooming], pet_compatibility: params[:other_pets], feed_cost_weekly: params[:food])
-
-	  		match_strength = 4;
-
-  		#removed energy needs (for more looser match-- if none found)
-
-  		end
-
-  		unless @dog 
-  			@dog = Dog.find_by(size: params[:housing], grooming_per_month: params[:grooming], pet_compatibility: params[:other_pets])
-  			match_strength = 3;
-  		# removed another param: feed costs (for more looser match-- if none found)
-	  	end
-
-	  	unless @dog
-	  		@dog = Dog.find_by(size: params[:housing], pet_compatibility: params[:other_pets])
-	  		match_strength = 2;
-	  	end
-
-  	else #no other pets at home, then search without that parameter (because it doesn't matter yes/no pet friendly):
-
-  		@dog = Dog.find_by(size: params[:housing], energy_needs: params[:activity_level], grooming_per_month: params[:grooming], feed_cost_weekly: params[:food])
-
-  		match_strength = 5;
-
-  		unless @dog
-  			@dog = Dog.find_by(size: params[:housing], grooming_per_month: params[:grooming], feed_cost_weekly: params[:food])
-
-  			match_strength = 4;
-  		end
-
-  		unless @dog 
-  			@dog = Dog.find_by(size: params[:housing], grooming_per_month: params[:grooming])
-
-  			match_strength = 3;
-  		end
-
-  	end
-
+  	
   	# use a switch statement to build your string!
 
   	unless @dog # if no dog returned
@@ -144,6 +97,7 @@ class SurveysController < ApplicationController
 
 
   		
+  	# API Call for Animal Photos
 
   		response = RestClient::Request.execute(
 	  		method: 'get',
@@ -152,7 +106,31 @@ class SurveysController < ApplicationController
 
   		@hash = ActiveSupport::JSON.decode(response) 
   			
+
+  	# API Call for SHELTER PETS
+
+  		shelters = RestClient::Request.execute(
+  			method: 'get',
+  			url: "http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&breed=#{name}")
+
+  		# http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&location=95110&breed=Chihuahua&format=json
+  		# # give us pet name/breed/pics
+  		# #shelter id too
+
+  		# CA2251
+
+  		# http://api.petfinder.com/shelter.get?key=f34ee08273312bdea551fefa54ad6426&id=CA2251
+
+
+
+  		
   	end
 
   end
+
+  def shelter
+  	#display shelter template
+  end
+
+
 end
