@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023202238) do
+ActiveRecord::Schema.define(version: 20171026185323) do
+
+  create_table "dog_apis", force: :cascade do |t|
+    t.string   "breed"
+    t.string   "size"
+    t.string   "weight"
+    t.string   "height"
+    t.string   "life_span"
+    t.string   "aka"
+    t.string   "group"
+    t.string   "origin"
+    t.string   "role"
+    t.text     "facts"
+    t.text     "behavior"
+    t.text     "health_concerns"
+    t.string   "activity"
+    t.string   "grooming"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "dogs", force: :cascade do |t|
     t.string   "breed"
@@ -24,6 +43,30 @@ ActiveRecord::Schema.define(version: 20171023202238) do
     t.text     "description"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.string   "breed"
+    t.string   "size"
+    t.string   "weight"
+    t.string   "height"
+    t.string   "life_span"
+    t.string   "aka"
+    t.string   "group"
+    t.string   "origin"
+    t.string   "role"
+    t.text     "facts"
+    t.text     "behavior"
+    t.text     "health_concerns"
+    t.string   "activity"
+    t.string   "grooming"
+    t.boolean  "pic_available"
+    t.string   "pic_name"
+    t.boolean  "friendly"
+    t.boolean  "novice"
+    t.string   "shelter_name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end
