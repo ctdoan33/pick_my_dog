@@ -18,10 +18,10 @@ class SurveysController < ApplicationController
   	flash[:errors] = []
 
   	if params[:zip].length == 5
-  		location = params[:zip]
+  		@location = params[:zip]
 
   	elsif (params[:city].length > 1) && params[:state]
-  		location = params[:city] + params[:state]
+  		@location = params[:city] +" "+ params[:state]
 
   	else 
 
@@ -29,11 +29,8 @@ class SurveysController < ApplicationController
   	end
 
 
-  	if params[:housing] && params[:activity_level] && params[:grooming] && params[:other_pets] && params[:food]
+  	unless params[:size] && params[:activity] && params[:grooming] && params[:friendly] && params[:novice]
   		
-
-  	else
-
   		flash[:errors].push("You must fill out each entry") 
   	end
 
@@ -46,13 +43,41 @@ class SurveysController < ApplicationController
 
 
 
-  	
+
+
+  	@dogs = Survey.all
+
+  	if params[:novice] == "true"
+  		@dogs= @dogs.where(novice: true)
+  	end
+
+  	if params[:friendly] == "true"
+  		@dogs= @dogs.where(friendly: true)
+  	end
+  	match_strength = 2
+
+
+  	temp = @dogs.where(size: params[:size])
+  	unless temp.empty?
+  		@dogs = temp
+  		match_strength = 3
+
+		temp = @dogs.where(activity: params[:activity])
+		unless temp.empty?
+			@dogs = temp
+			match_strength = 4
+
+			temp = @dogs.where(grooming: params[:grooming])
+			unless temp.empty?
+				@dogs = temp
+				match_strength = 5
+			end
+		end
+  	end
+
+
+  	@dog = @dogs.first
   	# use a switch statement to build your string!
-
-  	unless @dog # if no dog returned
-  		match_strength = 0;
-  	end 
-
 
   	case match_strength
   	when 5
@@ -63,37 +88,7 @@ class SurveysController < ApplicationController
   		@match = "O.K. Match! Your survey scored a 3/5 match for #{ @dog.breed}!"
   	when 2
   		@match = "Shaky Match! Your survey scored a 2/5 match for #{ @dog.breed}!"
-  	else
-  		@match = "Sorry! We tried (seriously...)! But your results did not match from our pool of pups. Good luck in your doggie search."
   	end 
-
-
-  	if @dog 
-  	#if dog obj returned, save its breed name to a variable 'name'. Make API call with var name interpolated into it. Grab random image of that breed.
-
-  		if @dog.breed == "Chihuahua"
-  			name = "chihuahua"
-  		elsif @dog.breed == "Boston Terrier"
-  			name = "bulldog/boston"
-  		elsif @dog.breed == "Pomeranian"
-  			name = "pomeranian"
-  		elsif @dog.breed == "Boxer"
-  			name = "boxer"
-  		elsif @dog.breed == "Schnauzer"
-  			name = "schnauzer/giant"
-  		elsif @dog.breed == "Mastiff"
-  			name = "mastiff/bull"
-        elsif @dog.breed == "Cardigan Welsh Corgi"
-  			name = "corgi/cardigan"
-  		elsif @dog.breed == "German Shepherd"
-  			name = "germanshepherd"
-  		elsif @dog.breed == "Bloodhound"
-  			name = "hound/blood"
-  		elsif @dog.breed == "Coonhound"
-  			name = "coonhound"
-  		elsif @dog.breed == "Dashund"
-  			name = "dachshund"
-  		end
 
 
   		
@@ -101,7 +96,7 @@ class SurveysController < ApplicationController
 
   		response = RestClient::Request.execute(
 	  		method: 'get',
-	  		url: "https://dog.ceo/api/breed/#{name}/images/random"
+	  		url: "https://dog.ceo/api/breed/#{@dog.pic_name}/images/random"
 	  			)
 
   		@hash = ActiveSupport::JSON.decode(response) 
@@ -109,9 +104,7 @@ class SurveysController < ApplicationController
 
   	# API Call for SHELTER PETS
 
-  		shelters = RestClient::Request.execute(
-  			method: 'get',
-  			url: "http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&breed=#{name}")
+  		
 
   		# http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&location=95110&breed=Chihuahua&format=json
   		# # give us pet name/breed/pics
@@ -124,13 +117,32 @@ class SurveysController < ApplicationController
 
 
   		
-  	end
+  
 
   end
 
   def shelter
   	#display shelter template
+  	@dog = Survey.find(params[:dog_id])
+
+  	response = RestClient::Request.execute(
+  			method: 'get',
+  			url: "http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&location=#{params[:location]}&breed=#{@dog.shelter_name}&count=10&format=json")
+
+  	@pets = ActiveSupport::JSON.decode(response)['petfinder']['pets']['pet']
+
+  	# @shelters = RestClient::Request.execute(
+  	# 		method: 'get',
+  	# 		url: "http://api.petfinder.com/shelter.get?key=f34ee08273312bdea551fefa54ad6426&location=#{params[:location]}&breed=#{@dog.breed}")
+
   end
 
+  def shelters
+  	response = RestClient::Request.execute(
+  		method: 'get',
+  		url: "http://api.petfinder.com/shelter.get?key=f34ee08273312bdea551fefa54ad6426&id=#{params[:id]}&format=json")
+  	@shelter = ActiveSupport::JSON.decode(response)['petfinder']['shelter']
+  	render json: @shelter
+  end
 
 end

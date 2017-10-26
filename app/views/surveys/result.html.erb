@@ -45,7 +45,7 @@
 			}
 
 			#wrapper {
-				height: 100%;
+				min-height: 100%;
 			}
 
 			#header {
@@ -115,9 +115,7 @@
 				margin-right: 20px;
 
 			}
-			.info {
-
-			}
+			
 
 			.paw_talk {
 				width: 30%;
@@ -159,6 +157,9 @@
 			#doggie_stats h3 {
 				font-size: 2em;
 				text-decoration: underline;
+			}
+			#doggie_stats p{
+				font-family: monospace;
 			}
 
 			.heart {
@@ -204,9 +205,7 @@
 		<div id= "wrapper">
 
 		 	<div id= "header">
-		 		<%if @dog %>
-		 			<%=@dog.breed%>
-		 		<% end %>
+		 		<%=@dog.breed.capitalize%>
 		 	</div>
 		
 		<!-- insert Dog API image -->
@@ -226,9 +225,9 @@
 			<div class= "boxes" id= "snapshot">
 				<p>At-A-Glance</p>
 				<ul>
-					<li>Weight:</li>
-					<li>Height:</li>
-					<li>Life-Span:</li>
+					<li><b>Weight:</b> <%= @dog.weight %></li>
+					<li><b>Height:</b> <%= @dog.height %></li>
+					<li><b>Life-Span:</b> <%= @dog.life_span %></li>
 				</ul>
 			</div>
 
@@ -243,16 +242,16 @@
 
 				<div id= "doggie_stats">
 						<h3>Role</h3>
-						<p></p>
+						<p><%= @dog.role %></p>
 						<h3>Behavior</h3>
-						<p></p>
-						<h3>Special Needs</h3>
-						<p></p>
+						<p><%= @dog.behavior %></p>
+						<h3>Breed Facts</h3>
+						<p><%= @dog.facts %></p>
 				</div>
 			</div>
 			
 			<div>
-				<%= link_to '/shelter' do %>
+				<%= link_to "/shelter/#{@dog.id}/#{@location}" do %>
 	   				<%= image_tag "heart.png (1).png", class: "heart" %>
 				<% end %>
 			</div>

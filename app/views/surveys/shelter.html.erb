@@ -11,11 +11,28 @@
 
 		<script>
 			$(document).ready(function(){
-				$('#doggie_stats').hide();
-	    		$('.dog_info').click(function(){
-	    			$('#orange_paw').toggle();  
-	    			$('#doggie_stats').toggle();
-	    		});
+				$('.shelter_button').click(function(){
+					button = this
+					$.get(
+						"/shelters/"+$(this).attr("id"),
+						function(res){
+							console.log(res);
+							var address=res.address1.$t;
+							var phone=res.phone.$t;
+							var email=res.email.$t
+							if (!address){
+								address="N/A";
+							}
+							if (!phone){
+								phone="N/A";
+							}
+							if (!email){
+								email="N/A";
+							}
+							button.outerHTML = res.name.$t +", "+address+", "+phone+ ", "+email
+					})
+				});
+
 	    		
 
 			});
@@ -44,7 +61,7 @@
 			}
 
 			#wrapper {
-				height: 100%;
+				min-height: 100%;
 			}
 
 			#header {
@@ -137,7 +154,7 @@
 		<div id= "wrapper">
 
 		 	<div id= "header">
-		 		{pets} up for adoption!
+		 		<%= @dog.shelter_name %>(s) >>> up for adoption!
 		 	</div>
 		
 		<!-- insert Dog API image -->
@@ -156,53 +173,26 @@
 				<table>
 					<thead>
 						<tr>
-							<th>Pet Name</th>
+							<th>Pet Name / ID</th>
 							<th>Age</th>
 							<th>Gender</th>
 							<th>Shelter</th>
 						</tr>
 					</thead>
 					<tbody>
+						<% @pets.each do |pet| %>
 						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
+						<td><%= pet['name']['$t'] %></td>
+						<td><%= pet['age']['$t'] %></td>
+						<td><%= pet['sex']['$t'] %></td>
+						<td>
+							<button class= "shelter_button" id= "<%=pet['shelterId']['$t']%>">Get shelter info!</button>
+						</td>
 						</tr>
-						<tr class="alt">
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-						<!-- <tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-						<tr class="alt">
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr> -->
+						<% end %>
 					</tbody>
 				</table>
 			</div>
-
-			
-
-			
-			
-
-		
 
 		</div>
 

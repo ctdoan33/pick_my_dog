@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get 'result' => 'surveys#result'
 
-  get 'shelter' => 'surveys#shelter'
+  get 'shelter/:dog_id/:location' => 'surveys#shelter'
 
-  
+  get 'shelters/:id' => 'surveys#shelters'
 end

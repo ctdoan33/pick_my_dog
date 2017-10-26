@@ -133,7 +133,7 @@
 
 
 					<form id = "survey" action= "/result" method="get">
-						<input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>">
+						<!-- <input type="hidden" name="authenticity_token" value= "<%= form_authenticity_token %>"> -->
 
 						<!-- if there are errors in survey submission, append these flash warnings: -->
 
@@ -209,11 +209,11 @@
 
 						<label class ="label">Housing Type</label>
 						<br>
-							<select name= "housing">
-							  <option value="Small">Apartment</option>
-							  <option value="Medium">House</option>
-							  <option value="Large">Home/Ranch with sizable backyard</option>
-							  <
+							<select name= "size">
+							  <option value="small">Apartment</option>
+							  <option value="medium">House</option>
+							  <option value="large">Home/Ranch with sizable backyard</option>
+							  
 							</select>
 							<br>
 							<br>
@@ -221,11 +221,11 @@
 
 						<label class ="label">Activity Level</label>
 						<br>
-							<input  type="radio" name="activity_level" value= "Low">Couch-potato
+							<input  type="radio" name="activity" value= "low">Couch-potato
 
-							<input type="radio" name="activity_level" value= "Medium">I take walks everyday 
+							<input type="radio" name="activity" value= "medium">I take walks everyday 
 
-							<input type="radio" name="activity_level" value= "High">I am all about that running life! 
+							<input type="radio" name="activityl" value= "high">I am all about that running life! 
 
 							<br>
 							<br>
@@ -234,11 +234,11 @@
 						<label class ="label">Groom me Gorgeous</label>
 						<br>
 
-							<input type="radio" name="grooming" value= "Once">Yea... what's grooming?! 
+							<input type="radio" name="grooming" value= "low">Yea... what's grooming?! 
 
-							<input type="radio" name="grooming" value= "Bi-Weekly">I don't mind a little brushing here and there. 
+							<input type="radio" name="grooming" value= "medium">I don't mind a little brushing here and there. 
 
-							<input type="radio" name="grooming" value= "Weekly"> Fashionista-status. Gonna groom my pooch every week! 
+							<input type="radio" name="grooming" value= "high"> Fashionista-status. Gonna groom my pooch every week! 
 							<br>
 							<br>
 
@@ -246,17 +246,17 @@
 						<label class ="label">Other Pets (in the home)</label>
 						<br>
 
-							<input type="radio" name="other_pets" value= "No">Nope!
+							<input type="radio" name="friendly" value="false">Nope!
 
-							<input type="radio" name="other_pets" value= "Yes">Sure do
+							<input type="radio" name="friendly" value= "true">Sure do
 
 							<br>
 							<br>
 
 						<label class ="label">Have you owned a dog before?</label>
 						<br>
-							<input type="radio" name="Nope">No, frowny face... 
-							<input type="radio" name="Yep">Yep yep yep
+							<input type="radio" name="novice" value="true" >No, frowny face... 
+							<input type="radio" name="novice" value="false">Yep yep yep
 							
 							<br>
 							<br>
