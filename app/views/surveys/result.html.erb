@@ -59,6 +59,18 @@
 				opacity: 0.8;
 			}
 
+			#links {
+				font-size: .5em;
+				text-align: left;
+				
+				
+			}
+
+			#links a{
+				margin-left: 25px;
+				color: #660000;
+			}
+
 			.dog_pic {
 				
 				background-color: rgba(192,192,192,0.6);
@@ -139,7 +151,7 @@
 			.dog_info {
 
 				margin-left: 300px;
-				height: 380px;
+				min-height: 380px;
 				width: 50%;
 
 			}
@@ -205,8 +217,14 @@
 		<div id= "wrapper">
 
 		 	<div id= "header">
+
+		 		<div id="links">
+					<a href="/">Home</a>
+				</div>
+
 		 		<%=@dog.breed.capitalize%>
 		 	</div>
+
 		
 		<!-- insert Dog API image -->
 			
@@ -252,7 +270,7 @@
 			
 			<div>
 				<%= link_to "/shelter/#{@dog.id}/#{@location}" do %>
-	   				<%= image_tag "heart.png (1).png", class: "heart" %>
+	   				<%= image_tag "heart.png (2).png", class: "heart" %>
 				<% end %>
 			</div>
 

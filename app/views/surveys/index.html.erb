@@ -8,20 +8,19 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
 		<script>
-			$(document).ready(function(){
-				$('#survey').hide();
-	    		$('.link').click(function(){
-	    			$('#survey').toggle();   
-	    		});
+				$(document).ready(function(){
+					$('#survey').hide();
+		    		$('.link').click(function(){
+		    			$('#survey').toggle();   
+		    		});
 
-	    		<% if flash[:errors] %>
-	    			$('#survey').show();
-	    		<% end %> 
-			});
+		    		<% if flash[:errors] && !flash[:errors].empty? %>
+		    			$('#survey').show();
+		    		<% end %> 
+					});
 		</script>
-
+		
 		<style type="text/css">
 
 			@font-face {
@@ -111,6 +110,8 @@
 				height: 55px;
 			}
 		</style>
+
+
 
 		<title>Finding Fido</title>
 
@@ -225,7 +226,7 @@
 
 							<input type="radio" name="activity" value= "medium">I take walks everyday 
 
-							<input type="radio" name="activityl" value= "high">I am all about that running life! 
+							<input type="radio" name="activity" value= "high">I am all about that running life! 
 
 							<br>
 							<br>
@@ -267,13 +268,16 @@
 					</form>
 				</div>	
 			<div id= "footer">
-				<p class= "foot_move"> We believe that <span style= "font-family: cursive; font-weight: bold ; color: #990000;">LOVE</span> is a four legged word 
+				<p class= "foot_move"> We believe that <span style= "font-family: cursive; font-weight: bold ; color: #660000;">LOVE</span> is a four legged word 
 				<%= image_tag "prints2.png", class: "bottom_prints" %>
 
 				</p>
 				
 								
 			</div>	
+
+			
+
 
 	</body>
 </html>
