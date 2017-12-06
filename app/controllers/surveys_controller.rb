@@ -102,22 +102,6 @@ class SurveysController < ApplicationController
   		@hash = ActiveSupport::JSON.decode(response) 
   			
 
-  	# API Call for SHELTER PETS
-
-  		
-
-  		# http://api.petfinder.com/pet.find?key=f34ee08273312bdea551fefa54ad6426&location=95110&breed=Chihuahua&format=json
-  		# # give us pet name/breed/pics
-  		# #shelter id too
-
-  		# CA2251
-
-  		# http://api.petfinder.com/shelter.get?key=f34ee08273312bdea551fefa54ad6426&id=CA2251
-
-
-
-  		
-  
 
   end
 
@@ -131,9 +115,9 @@ class SurveysController < ApplicationController
 
   	@pets = ActiveSupport::JSON.decode(response)['petfinder']['pets']['pet']
 
-  	# @shelters = RestClient::Request.execute(
-  	# 		method: 'get',
-  	# 		url: "http://api.petfinder.com/shelter.get?key=f34ee08273312bdea551fefa54ad6426&location=#{params[:location]}&breed=#{@dog.breed}")
+  	if !@pets
+      flash[:notice] = "Bummer!! Currently no shelter information for this dog breed :( "
+    end
 
   end
 
